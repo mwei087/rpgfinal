@@ -44,8 +44,8 @@ window.onload = function(){
   var player = new Sprite(game.spriteWidth, game.spriteHeight);
   var setPlayer = function(){
     player.spriteOffset = 5;
-    player.startingX = 6;
-    player.startingY = 14;
+    player.startingX = 1;
+    player.startingY = 1;
     player.x = player.startingX * game.spriteWidth;
     player.y = player.startingY * game.spriteHeight;
     player.direction = 0;
@@ -221,6 +221,13 @@ window.onload = function(){
       npc.say("hello");
     }
   };
+
+  var water = {
+    action: function(){
+      npc.say("You got water");
+      foregroundData[2][6] = -1
+    }
+  }
   var shopScene = new Scene();
   var cat = {
     action: function(){
@@ -240,7 +247,7 @@ window.onload = function(){
       game.pushScene(battleScene);
     }
   };
-  var spriteRoles = [,,greeter,,cat,,,,,,,,,,,brawler]
+  var spriteRoles = [,,greeter,tree,cat,,,,,,,,,brawler,,,,water]
   var setBattle = function(){
     battleScene.backgroundColor = '#000';
     var battle = new Group();
