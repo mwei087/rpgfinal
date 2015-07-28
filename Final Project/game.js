@@ -1,4 +1,5 @@
 enchant();
+localStorage.clear();
 window.onload = function(){
   var game = new Game(300, 300);
   game.keybind(32, 'a');
@@ -160,7 +161,8 @@ window.onload = function(){
    var x = Math.floor(this.x /game.spriteWidth);
     var y = Math.floor(this.y/game.spriteHeight);
     if(foregroundData[y][x]=== 18){
-      foregroundData[y][x]=== 13;
+      foregroundData[y][x]= 13;
+      map.collisionData[y][x] = 0;
       return true;
     }
     else
@@ -231,7 +233,8 @@ window.onload = function(){
   var appletree = {
  action: function()
  {  
-   player.inventory.push(game.items[3].id);
+   player.inventory.push(game.items[4].id);
+  
  }
   }
   var greeter = {
@@ -572,8 +575,8 @@ window.onload = function(){
         var temp = player.onsquare();
         if (temp){
           spriteRoles[18].action();
-                    alert("hey");
-          player.displayStatus();
+          npc.say("You picked an apple");
+       //   player.displayStatus();
         }
         else{
           var playerFacing = player.facing();
