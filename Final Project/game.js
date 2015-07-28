@@ -27,7 +27,7 @@ window.onload = function(){
     for(var i = 0; i< foregroundData.length; i++){
       collisionData.push([]);
       for(var j = 0; j< foregroundData[0].length; j++){
-        var collision = foregroundData[i][j] %13 > 1 ? 1 : 0;
+        var collision = foregroundData[i][j] %18 %13 > 1 ? 1 : 0;
         collisionData[i][j] = collision;
       }
     }
@@ -156,6 +156,18 @@ window.onload = function(){
       }
     }
   };
+  player.onsquare = function(){
+   var x = Math.floor(this.x /game.spriteWidth);
+    var y = Math.floor(this.y/game.spriteHeight);
+    if(foregroundData[y][x]=== 18){
+      foregroundData[y][x]=== 13;
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  };
   player.square = function(){
     return {x: Math.floor(this.x /game.spriteWidth), y: Math.floor(this.y/game.spriteHeight)}
   }
@@ -200,10 +212,10 @@ window.onload = function(){
       for (var i = 0; i < player.inventory.length; i++){
         var item = new Sprite(game.spriteWidth, game.spriteHeight);
         item.y = 130 + yOffset;
-        item.x = 30 + 70*i;
+        item.x = 10 + 20*i;
         item.frame = player.inventory[i];
-        item.scaleX = 2;
-        item.scaleY = 2;
+        item.scaleX = .5;
+        item.scaleY = .5;
         item.image = player.itemSurface;
         player.visibleItems.push(item);
         game.currentScene.addChild(item);
@@ -215,6 +227,12 @@ window.onload = function(){
       player.statusLabel.height = 12;
       player.statusLabel.text = message;
     }
+  }
+  var appletree = {
+ action: function()
+ {  
+   player.inventory.push(game.items[3].id);
+ }
   }
   var greeter = {
     action: function(){
@@ -240,7 +258,7 @@ window.onload = function(){
       game.pushScene(battleScene);
     }
   };
-  var spriteRoles = [,,greeter,,cat,,,,,,,,,,,brawler]
+  var spriteRoles = [,,greeter,,cat,,,,,,,,,,,brawler,,,appletree]
   var setBattle = function(){
     battleScene.backgroundColor = '#000';
     var battle = new Group();
@@ -482,11 +500,11 @@ window.onload = function(){
         } else if (game.input.left) {
           shop.itemSelected = shop.itemSelected + game.items.length - 1;
           shop.itemSelected = shop.itemSelected % game.items.length;
-          shop.itemSelector.x = 30 + 70*shop.itemSelected;
+          shop.itemSelector.x = 10 + 40*shop.itemSelected;
           shop.message.text = shop.greeting;
         } else if (game.input.right) {
           shop.itemSelected = (shop.itemSelected + 1) % game.items.length;
-          shop.itemSelector.x = 30 + 70*shop.itemSelected;
+          shop.itemSelector.x = 10 + 40*shop.itemSelected;
           shop.message.text = shop.greeting;
         }
       }, 500);
@@ -549,14 +567,24 @@ window.onload = function(){
     setBattle();
     player.on('enterframe', function() {
       player.move();
+      
       if (game.input.a) {
-        var playerFacing = player.facing();
-        if(!playerFacing || !spriteRoles[playerFacing]){
+        var temp = player.onsquare();
+        if (temp){
+          spriteRoles[18].action();
+                    alert("hey");
           player.displayStatus();
-        }else{
-          spriteRoles[playerFacing].action();
-        };
-      };
+        }
+        else{
+          var playerFacing = player.facing();
+          if(!playerFacing || !spriteRoles[playerFacing]){
+            player.displayStatus();
+          }
+          else{
+            spriteRoles[playerFacing].action();
+          }
+        }
+      }
     });
     game.rootScene.on('enterframe', function(e) {
       game.focusViewport();
