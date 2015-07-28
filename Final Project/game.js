@@ -222,18 +222,28 @@ window.onload = function(){
     }
   };
 
+  //actions when player interacts with water
   var water = {
     action: function(){
       npc.say("You got water");
-      foregroundData[2][6] = -1
+      foregroundData[2][6] = -1;
+      foregroundData[2][6] = -1;
     }
-  }
+  };
+  //actions when player interacts with tree
+  var tree = {
+    action: function(){
+      npc.say("tree sounds intensify");
+    }
+  };
+
   var shopScene = new Scene();
   var cat = {
     action: function(){
       game.pushScene(shopScene);
     }
   };
+
   var battleScene = new Scene();
   var brawler = {
     maxHp: 20,
