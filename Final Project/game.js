@@ -4,12 +4,15 @@ window.onload = function(){
   game.keybind(32, 'a');
   game.spriteSheetWidth = 256;
   game.spriteSheetHeight = 16;
-  game.itemSpriteSheetWidth = 64;
+  game.itemSpriteSheetWidth = 96;
   game.preload(['sprites2.png', 'items.png']);
   game.items = [{price: 1000, description: "Hurter", id: 0}, 
                {price: 5000, description: "Drg. Paw", id: 1},
                {price: 5000, description: "Ice Magic", id: 2},
-               {price: 60, description: "Chess Set", id: 3}]
+               {price: 60, description: "Chess Set", id: 3},
+               {price: 1, description: "Apple", id: 4},
+               {price: 1, description: "Water Bottle", id: 5},
+               ]
   game.fps = 15;
   game.spriteWidth = 16;
   game.spriteHeight = 16;
@@ -432,28 +435,29 @@ window.onload = function(){
         var image = new Surface(game.itemSpriteSheetWidth, game.spriteSheetHeight);
         var item = new Sprite(game.spriteWidth, game.spriteHeight);
         image.draw(game.assets['items.png']);
-        itemLocationX = 30 + 70*i;
+        itemLocationX = 10 + 40*i;
         itemLocationY = 70;
         item.y = itemLocationY;
         item.x = itemLocationX;
         item.frame = i;
-        item.scaleX = 2;
-        item.scaleY = 2;
+        item.scaleX = 1;
+        item.scaleY = 1;
         item.image = image;
         this.addChild(item);
         var itemDescription = new Label(game.items[i].price + "<br />" + game.items[i].description);
-        itemDescription.x = itemLocationX - 8;
+        itemDescription.x = itemLocationX - 1;
         itemDescription.y = itemLocationY + 40;
+        itemDescription.font = "8px arial";
         itemDescription.color = '#fff';
         this.addChild(itemDescription);
         if(i === this.itemSelected){
           var image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
           this.itemSelector = new Sprite(game.spriteWidth, game.spriteHeight);
           image.draw(game.assets['sprites2.png']);
-          itemLocationX = 30 + 70*i;
+          itemLocationX = 10 + 30*i;
           itemLocationY = 160;
-          this.itemSelector.scaleX = 2;
-          this.itemSelector.scaleY = 2;
+          this.itemSelector.scaleX = 1;
+          this.itemSelector.scaleY = 1;
           this.itemSelector.y = itemLocationY;
           this.itemSelector.x = itemLocationX;
           this.itemSelector.frame = 7;
