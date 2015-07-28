@@ -45,8 +45,8 @@ window.onload = function(){
   var player = new Sprite(game.spriteWidth, game.spriteHeight);
   var setPlayer = function(){
     player.spriteOffset = 5;
-    player.startingX = 6;
-    player.startingY = 14;
+    player.startingX = 1;
+    player.startingY = 1;
     player.x = player.startingX * game.spriteWidth;
     player.y = player.startingY * game.spriteHeight;
     player.direction = 0;
@@ -242,12 +242,29 @@ window.onload = function(){
       npc.say("hello");
     }
   };
+
+  //actions when player interacts with water
+  var water = {
+    action: function(){
+      npc.say("You got water");
+      foregroundData[2][6] = -1;
+      foregroundData[2][6] = -1;
+    }
+  };
+  //actions when player interacts with tree
+  var tree = {
+    action: function(){
+      npc.say("tree sounds intensify");
+    }
+  };
+
   var shopScene = new Scene();
   var cat = {
     action: function(){
       game.pushScene(shopScene);
     }
   };
+
   var battleScene = new Scene();
   var brawler = {
     maxHp: 20,
@@ -261,7 +278,11 @@ window.onload = function(){
       game.pushScene(battleScene);
     }
   };
+<<<<<<< HEAD
+  var spriteRoles = [,,greeter,tree,cat,,,,,,,,,brawler,,,,water]
+=======
   var spriteRoles = [,,greeter,,cat,,,,,,,,,,,brawler,,,appletree]
+>>>>>>> 0efb15211f3777a7b0d4acdf1f932c4836e8f550
   var setBattle = function(){
     battleScene.backgroundColor = '#000';
     var battle = new Group();
