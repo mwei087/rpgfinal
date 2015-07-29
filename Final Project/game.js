@@ -28,7 +28,7 @@ window.onload = function(){
     for(var i = 0; i< foregroundData.length; i++){
       collisionData.push([]);
       for(var j = 0; j< foregroundData[0].length; j++){
-        var collision = foregroundData[i][j] %18 %13 > 1 ? 1 : 0;
+        var collision = foregroundData[i][j] %18 %13 > 1 ? 1 :0;
         collisionData[i][j] = collision;
       }
     }
@@ -193,12 +193,23 @@ window.onload = function(){
   }
   player.facing = function(){
     var facingSquare = player.facingSquare();
+   // this.xval = facingSquare.x;
+
+   // this.yval = facingSquare.y;
     if (!facingSquare){
       return null;
     }else{
       return foregroundData[facingSquare.y][facingSquare.x];
     }
   }
+    player.xvalues = function(){
+          var facingSquare = player.facingSquare();
+      return facingSquare.x;
+    }
+    player.yvalues = function(){
+          var facingSquare = player.facingSquare();
+      return facingSquare.y;
+    }
   player.visibleItems = [];
   player.itemSurface = new Surface(game.itemSpriteSheetWidth, game.spriteSheetHeight);
   player.inventory = [];
@@ -245,18 +256,17 @@ window.onload = function(){
 
   //actions when player interacts with water
   var water = {
-    action: function(){
+    action: function(xvalue, yvalue){
       npc.say("You got water");
-      foregroundData[2][6] = -1;
-      foregroundData[2][6] = -1;
+      foregroundData[yvalue][xvalue] = -1;
+      map.collisionData[yvalue][xvalue] = 0;
+      player.inventory.push(game.items[5].id);
+
+    
     }
   };
   //actions when player interacts with tree
-  var tree = {
-    action: function(){
-      npc.say("tree sounds intensify");
-    }
-  };
+
 
   var shopScene = new Scene();
   var cat = {
@@ -278,11 +288,11 @@ window.onload = function(){
       game.pushScene(battleScene);
     }
   };
-<<<<<<< HEAD
-  var spriteRoles = [,,greeter,tree,cat,,,,,,,,,brawler,,,,water]
-=======
-  var spriteRoles = [,,greeter,,cat,,,,,,,,,,,brawler,,,appletree]
->>>>>>> 0efb15211f3777a7b0d4acdf1f932c4836e8f550
+//<<<<<<< HEAD
+  //var spriteRoles = [,,greeter,tree,cat,,,,,,,,,brawler,,,,water]
+//=======
+  var spriteRoles = [water,,greeter,,cat,,,,,,,,,,,brawler,,water,appletree];
+//>>>>>>> 0efb15211f3777a7b0d4acdf1f932c4836e8f550
   var setBattle = function(){
     battleScene.backgroundColor = '#000';
     var battle = new Group();
@@ -605,7 +615,13 @@ window.onload = function(){
             player.displayStatus();
           }
           else{
-            spriteRoles[playerFacing].action();
+            if ((playerFacing === 17) || (playerFacing ==0))
+            {
+
+              spriteRoles[playerFacing].action(player.xvalues(), player.yvalues());
+            }
+            else{
+            spriteRoles[playerFacing].action();}
           }
         }
       }
