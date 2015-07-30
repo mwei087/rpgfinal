@@ -103,21 +103,12 @@ window.onload = function(){
   };
   player.displayStatus = function(){
     player.statusLabel.text = 
-      "--" + player.name + " " + player.characterClass + 
-      "<br />--HP: "+player.hp + "/" + player.levelStats[player.level].maxHp + 
-      "<br />--MP: "+player.mp + "/" + player.levelStats[player.level].maxMp + 
-      "<br />--Exp: "+player.exp + 
-      "<br />--Level: " + player.level + 
-      "<br />--GP: " + player.gp +
-      "<br /><br />--Inventory:"; 
-    player.statusLabel.height = 170;
-   
 	  "<br />Checklist" +
       "<br />--Apple "+
       "<br />--Water Bottle"+
       "<br />--Money "+
       "<br />--Safety "+
-      "<br />--Find Love "+
+      "<br />--Love "+
 	  "<br />--Friendship "
     player.statusLabel.height = 130;
 
