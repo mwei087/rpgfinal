@@ -314,7 +314,7 @@ window.onload = function(){
   };
   var heart = {
      action: function(xvalue, yvalue){
-      npc.say("You found love!11!!!1 awwwwwwwwww");
+      npc.say("You found love!");
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
     }
