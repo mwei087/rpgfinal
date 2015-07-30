@@ -1,5 +1,9 @@
 enchant();
 localStorage.clear();
+var enemyxval = 2;
+var enemyyval  = 2;
+var nottouched1 = false;
+var nottouched2 = false;
 var seeninventory1 = false;
 var seeninventory2 = false;
 var seeninventory3 =false;
@@ -105,7 +109,7 @@ window.onload = function(){
     player.statusLabel.text = 
    
 	  "<br />Checklist" +
-      "<br />--Apple "+
+      "<br />--Apple "+ 
       "<br />--Water Bottle"+
       "<br />--Money "+
       "<br />--Safety "+
@@ -638,7 +642,93 @@ window.onload = function(){
     game.rootScene.firstChild.x = x;
     game.rootScene.firstChild.y = y;
   };
+  
+  setInterval(function () {
+        var playerxval = player.xvalues();
+        var playeryval = player.yvalues();
+        map.collisionData[enemyyval][enemyxval] = 0
+        if (playerxval > enemyxval){
+          enemyxval++;
+          if (map.collisionData[enemyyval][enemyxval] != 0)
+        {
+          enemyxval--;
+       }
+       else{
+         foregroundData[enemyyval][enemyxval-1] = -1;
+          map.collisionData[enemyyval][enemyxval] = 0;
+          foregroundData[enemyyval][enemyxval] = 16;
+          if (playerxval === enemyxval && playeryval === enemyyval){
+      console.log("You died!");}
+       }
+        }
+        else if (playerxval < enemyxval){
+          enemyxval--;
+          if (map.collisionData[enemyyval][enemyxval] != 0)
+        {
+          enemyxval++;
+       }
+       else{
+         foregroundData[enemyyval][enemyxval+1] = -1;
+          map.collisionData[enemyyval][enemyxval] = 0;
+          foregroundData[enemyyval][enemyxval] = 16;
+           if (playerxval === enemyxval && playeryval === enemyyval){
+      console.log("You died!");}
+       }
+        }
+        
+        if (playeryval > enemyyval){
+          enemyyval++;
+          if (map.collisionData[enemyyval][enemyxval] != 0)
+        {
+          enemyyval--;
+       }
+       else{
+         foregroundData[enemyyval-1][enemyxval] = -1;
+          map.collisionData[enemyyval][enemyxval] = 0;
+          foregroundData[enemyyval][enemyxval] = 16;
+           if (playerxval === enemyxval && playeryval === enemyyval){
+      console.log("You died!");}
+       }
+        }
+        else if (playerxval < enemyyval){
+          enemyyval--;
+          if (map.collisionData[enemyyval][enemyxval] != 0)
+        {
+          enemyyval++;
+       }
+       else{
+         foregroundData[enemyyval+1][enemyxval] = -1;
+          map.collisionData[enemyyval][enemyxval] = 0;
+          foregroundData[enemyyval][enemyxval] = 16;
+           if (playerxval === enemyxval && playeryval === enemyyval){
+      console.log("You died!");}
+       }
+        }
+        if (seeninventory1 && seeninventory2 && !nottouched1){
+                    foregroundData[enemyyval][enemyxval] = -1;
+          enemyxval = 16;
+          enemyyval = 3;
+           map.collisionData[enemyyval][enemyxval] = 0;
+          foregroundData[enemyyval][enemyxval] = 16;
+           if (playerxval === enemyxval && playeryval === enemyyval){
+      console.log("You died!");}
+          nottouched1 = true;
+        }
+                if (seeninventory3 && seeninventory4 && !nottouched2){
+                                      foregroundData[enemyyval][enemyxval] = -1;
+                  enemyxval = 28;
+                  enemyyval = 3;
+                 map.collisionData[enemyyval][enemyxval] = 0;
+          foregroundData[enemyyval][enemyxval] = 16;
+           if (playerxval === enemyxval && playeryval === enemyyval){
+      console.log("You died!");}
+                    nottouched2 = true;
+                }
+       }
+       , 500);
+       
   game.onload = function(){
+     
     game.storable = ['exp', 'level', 'gp', 'inventory'];
     game.saveToLocalStorage = function(){
       for(var i = 0; i < game.storable.length; i++){
