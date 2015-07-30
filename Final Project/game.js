@@ -33,7 +33,7 @@ window.onload = function(){
     for(var i = 0; i< foregroundData.length; i++){
       collisionData.push([]);
       for(var j = 0; j< foregroundData[0].length; j++){
-        var collision = foregroundData[i][j] %18 %13 > 1 ? 1 :0;
+        var collision = foregroundData[i][j] %18 %13 >= 1 ? 1 :0; //1 else 0
         collisionData[i][j] = collision;
       }
     }
@@ -105,12 +105,12 @@ window.onload = function(){
     player.statusLabel.text = 
    
 	  "<br />Checklist" +
-      "<br />--Food "+
-      "<br />--Water "+
-      "<br />--Wealth "+
+      "<br />--Apple "+
+      "<br />--Water Bottle"+
+      "<br />--Money "+
       "<br />--Safety "+
-      "<br />--Friendship "+
-	  "<br />--Love "
+      "<br />--Find Love "+
+	  "<br />--Friendship "
     player.statusLabel.height = 130;
     player.showInventory(0);
   };
@@ -303,6 +303,13 @@ window.onload = function(){
     
     }
   };
+  var heart = {
+     action: function(xvalue, yvalue){
+      npc.say("You found love!11!!!1 awwwwwwwwww");
+      foregroundData[yvalue][xvalue] = -1;
+      map.collisionData[yvalue][xvalue] = 0;
+    }
+  }
   var health = {
     action: function(xvalue, yvalue){
       npc.say("You got a first aid kit");
@@ -341,7 +348,7 @@ window.onload = function(){
     }
   };
 
-  var spriteRoles = [water,,greeter,,cat,,,,,,,,,,,brawler,,water,appletree,money,,health];
+  var spriteRoles = [water,,greeter,,cat,,,,,,,,,,,brawler,,water,appletree,money,,health, heart];
 
   var setBattle = function(){
     battleScene.backgroundColor = '#000';
@@ -666,7 +673,7 @@ window.onload = function(){
             player.displayStatus();
           }
           else{
-            if ((playerFacing === 17) || (playerFacing ==0) || (playerFacing===19) || (playerFacing === 21))
+            if ((playerFacing === 17) || (playerFacing ==0) || (playerFacing===19) || (playerFacing === 21) || (playerFacing === 22))
             {
 
               spriteRoles[playerFacing].action(player.xvalues(), player.yvalues());
