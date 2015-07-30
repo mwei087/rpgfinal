@@ -64,8 +64,8 @@ window.onload = function(){
     player.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
     player.image.draw(game.assets['sprites2.png']);
 
-    player.name = "Roger";
-    player.characterClass = "Rogue";
+    player.name = "Person";
+    player.characterClass = "McMan";
     player.exp = 0;
     player.level = 1;
     player.gp = 100;
@@ -107,15 +107,15 @@ window.onload = function(){
   };
   player.displayStatus = function(){
     player.statusLabel.text = 
-   
 	  "<br />Checklist" +
       "<br />--Apple "+ 
       "<br />--Water Bottle"+
       "<br />--Money "+
       "<br />--Safety "+
-      "<br />--Find Love "+
+      "<br />--Love "+
 	  "<br />--Friendship "
     player.statusLabel.height = 130;
+
     player.showInventory(0);
   };
   player.clearStatus = function(){
@@ -294,7 +294,7 @@ window.onload = function(){
   };
   var money = {
     action: function(xvalue, yvalue){
-      npc.say("You got moneyyyyssssss!!!!! :D :D :D");
+      npc.say("You got wealth");
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
       //player.inventory.push(game.items[5].id);
@@ -309,14 +309,14 @@ window.onload = function(){
   };
   var heart = {
      action: function(xvalue, yvalue){
-      npc.say("You found love!11!!!1 awwwwwwwwww");
+      npc.say("You found love!");
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
     }
   }
   var health = {
     action: function(xvalue, yvalue){
-      npc.say("You got a first aid kit");
+      npc.say("You got safety");
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
       seeninventory4 = true;
@@ -753,7 +753,7 @@ window.onload = function(){
         var temp = player.onsquare();
         if (temp){
           spriteRoles[18].action();
-          npc.say("You picked an apple");
+          npc.say("You got food");
           
        //   player.displayStatus();
         }
