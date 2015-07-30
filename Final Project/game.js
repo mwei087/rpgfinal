@@ -103,7 +103,6 @@ window.onload = function(){
   };
   player.displayStatus = function(){
     player.statusLabel.text = 
-<<<<<<< HEAD
       "--" + player.name + " " + player.characterClass + 
       "<br />--HP: "+player.hp + "/" + player.levelStats[player.level].maxHp + 
       "<br />--MP: "+player.mp + "/" + player.levelStats[player.level].maxMp + 
@@ -112,7 +111,6 @@ window.onload = function(){
       "<br />--GP: " + player.gp +
       "<br /><br />--Inventory:"; 
     player.statusLabel.height = 170;
-=======
    
 	  "<br />Checklist" +
       "<br />--Food "+
@@ -122,7 +120,7 @@ window.onload = function(){
       "<br />--Friendship "+
 	  "<br />--Love "
     player.statusLabel.height = 130;
->>>>>>> 1002dab40b41cad94cdee10a063e7cfd78befe2d
+
     player.showInventory(0);
   };
   player.clearStatus = function(){
@@ -301,7 +299,7 @@ window.onload = function(){
   };
   var money = {
     action: function(xvalue, yvalue){
-      npc.say("You got moneyyyyssssss!!!!! :D :D :D");
+      npc.say("You got wealth");
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
       //player.inventory.push(game.items[5].id);
@@ -316,7 +314,7 @@ window.onload = function(){
   };
   var health = {
     action: function(xvalue, yvalue){
-      npc.say("You got a first aid kit");
+      npc.say("You got safety");
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
       seeninventory4 = true;
@@ -667,7 +665,7 @@ window.onload = function(){
         var temp = player.onsquare();
         if (temp){
           spriteRoles[18].action();
-          npc.say("You picked an apple");
+          npc.say("You got food");
           
        //   player.displayStatus();
         }
