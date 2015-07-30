@@ -97,21 +97,21 @@ window.onload = function(){
       
     player.statusLabel = new Label("");
     player.statusLabel.width = game.width;
-    player.statusLabel.y = undefined;
-    player.statusLabel.x = undefined;
+   
     player.statusLabel.color = '#fff';
     player.statusLabel.backgroundColor = '#000';
   };
   player.displayStatus = function(){
     player.statusLabel.text = 
-      "--" + player.name + " the " + player.characterClass + 
-      "<br />--HP: "+player.hp + "/" + player.levelStats[player.level].maxHp + 
-      "<br />--MP: "+player.mp + "/" + player.levelStats[player.level].maxMp + 
-      "<br />--Exp: "+player.exp + 
-      "<br />--Level: " + player.level + 
-      "<br />--GP: " + player.gp +
-      "<br /><br />--Inventory:"; 
-    player.statusLabel.height = 170;
+   
+	  "<br />Checklist" +
+      "<br />--Food "+
+      "<br />--Water "+
+      "<br />--Wealth "+
+      "<br />--Safety "+
+      "<br />--Friendship "+
+	  "<br />--Love "
+    player.statusLabel.height = 130;
     player.showInventory(0);
   };
   player.clearStatus = function(){
@@ -138,18 +138,25 @@ window.onload = function(){
       if (game.input.up) {
         this.direction = 1;
         this.yMovement = -4;
+		 player.statusLabel.y = player.y;
+  
         player.clearStatus();
       } else if (game.input.right) {
         this.direction = 2;
         this.xMovement = 4;
+		  player.statusLabel.x = player.x;
         player.clearStatus();
       } else if (game.input.left) {
         this.direction = 3;
         this.xMovement = -4;
+		player.statusLabel.x = player.x;
         player.clearStatus();
+		
       } else if (game.input.down) {
         this.direction = 0;
         this.yMovement = 4;
+		  player.statusLabel.y = player.y;
+		
         player.clearStatus();
       }
       if (this.xMovement || this.yMovement) {
@@ -237,6 +244,8 @@ window.onload = function(){
         item.image = player.itemSurface;
         player.visibleItems.push(item);
         game.currentScene.addChild(item);
+		
+		
       }
     }
   };
