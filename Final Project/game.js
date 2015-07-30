@@ -2,6 +2,8 @@ enchant();
 localStorage.clear();
 var seeninventory1 = false;
 var seeninventory2 = false;
+var seeninventory3 =false;
+var seeninventory4 = false;
 window.onload = function(){
   var game = new Game(300, 300);
   game.keybind(32, 'a');
@@ -15,6 +17,7 @@ window.onload = function(){
                {price: 60, description: "Chess Set", id: 3},
                {price: 1, description: "Apple", id: 4},
                {price: 1, description: "Water Bottle", id: 5},
+
                ]
   game.fps = 15;
   game.spriteWidth = 16;
@@ -291,10 +294,40 @@ window.onload = function(){
       if (seeninventory1){
           foregroundData[2][12] = -1;
           map.collisionData[2][12] = 0;
+          npc.say("Level 2 unlocked");
       }
     
     }
   };
+  var money = {
+    action: function(xvalue, yvalue){
+      npc.say("You got moneyyyyssssss!!!!! :D :D :D");
+      foregroundData[yvalue][xvalue] = -1;
+      map.collisionData[yvalue][xvalue] = 0;
+      //player.inventory.push(game.items[5].id);
+      seeninventory3 = true;
+      if (seeninventory4){
+        foregroundData[2][24] = -1;
+          map.collisionData[2][24] = 0;
+          npc.say("Level 3 unlocked");
+      }
+    
+    }
+  };
+  var health = {
+    action: function(xvalue, yvalue){
+      npc.say("You got a first aid kit");
+      foregroundData[yvalue][xvalue] = -1;
+      map.collisionData[yvalue][xvalue] = 0;
+      seeninventory4 = true;
+        if (seeninventory3){
+        foregroundData[2][24] = -1;
+          map.collisionData[2][24] = 0;
+          npc.say("Level 3 unlocked");
+      }
+    
+    }
+  }
   //actions when player interacts with tree
 
 
@@ -319,7 +352,7 @@ window.onload = function(){
     }
   };
 
-  var spriteRoles = [water,,greeter,,cat,,,,,,,,,,,brawler,,water,appletree];
+  var spriteRoles = [water,,greeter,,cat,,,,,,,,,,,brawler,,water,appletree,money,,health];
 
   var setBattle = function(){
     battleScene.backgroundColor = '#000';
@@ -644,7 +677,7 @@ window.onload = function(){
             player.displayStatus();
           }
           else{
-            if ((playerFacing === 17) || (playerFacing ==0))
+            if ((playerFacing === 17) || (playerFacing ==0) || (playerFacing===19) || (playerFacing === 21))
             {
 
               spriteRoles[playerFacing].action(player.xvalues(), player.yvalues());

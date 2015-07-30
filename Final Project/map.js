@@ -32,6 +32,12 @@ var mapData =
   var prev = [];
   var seenapple = false;
   var seenwater = false;
+  var seenmoney = false;
+  var seenhealth = false; 
+  var moneyx = 0;
+  var moneyy = 0;
+  var healthx = 0;
+  var healthy = 0;
   var applex = 0;
   var appley = 0;
   var waterx = 0;
@@ -76,6 +82,24 @@ var mapData =
                seenwater = true;
            }
            }
+           
+           if ( j > 12 && j <24){
+              var random2 = Math.floor((Math.random() * 144) +1);
+              if (random2 === 25 && !seenmoney)
+           {
+               index = 19;
+               moneyx = j+12;
+               moneyy = i;
+               seenmoney = true;
+           }
+           else if (random2 === 20 && !seenhealth)
+           {
+               index = 21;
+                healthx = j + 12;
+                healthy = i
+               seenhealth = true;
+           }
+           }
            if (index === -1 || index === 18){
                newarr.push(j);
                if ((contains(j, prev)) && j != 12 && j != 24){
@@ -98,6 +122,16 @@ var mapData =
        prev = newarr;
        foregroundData[i] = temp;
    }
+   if (!seenhealth){
+     healthx = Math.floor((Math.random() * 25));
+     healthy = 13 + Math.floor((Math.random() * 12));
+     foregroundData[healthy][healthx] = 21;
+   }
+   if(!seenmoney){
+     moneyy = Math.floor((Math.random() * 25));
+     moneyx = 13 + Math.floor((Math.random() * 12));
+     foregroundData[moneyy][moneyx] = 19;
+   }
    if (!seenapple){
        var applerow = Math.floor((Math.random() * 25));
       appley =applerow;
@@ -113,7 +147,8 @@ var mapData =
    foregroundData[1][1] = -1; //[,]calls whole row not just the square
    getPath(applex, appley, 18, 17);
    getPath(waterx, watery, 17, 18);
-  
+   foregroundData[2][12] = 20;
+  foregroundData[2][24] = 20;
 /*var foregroundData = 
    [[3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], //25x38
     [3, -1, -1, 3, 3, 3, 18, -1, -1, -1, -1, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, 3],
@@ -297,7 +332,7 @@ if (goaly === 1 && goalx ===0){
               }
       }
                             foregroundData[yval][xval] = num; 
-                            alert(counter); 
+                          //  alert(counter); 
                             for (var i = 0; i < 25; i++)
                         {
                             for(var j = 0; j < 38; j++)
