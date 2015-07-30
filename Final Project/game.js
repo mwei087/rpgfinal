@@ -57,8 +57,8 @@ window.onload = function(){
     player.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
     player.image.draw(game.assets['sprites2.png']);
 
-    player.name = "Roger";
-    player.characterClass = "Rogue";
+    player.name = "Person";
+    player.characterClass = "McMan";
     player.exp = 0;
     player.level = 1;
     player.gp = 100;
@@ -101,7 +101,7 @@ window.onload = function(){
   };
   player.displayStatus = function(){
     player.statusLabel.text = 
-      "--" + player.name + " the " + player.characterClass + 
+      "--" + player.name + " " + player.characterClass + 
       "<br />--HP: "+player.hp + "/" + player.levelStats[player.level].maxHp + 
       "<br />--MP: "+player.mp + "/" + player.levelStats[player.level].maxMp + 
       "<br />--Exp: "+player.exp + 
