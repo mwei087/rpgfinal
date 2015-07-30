@@ -1,5 +1,7 @@
 enchant();
 localStorage.clear();
+var seeninventory1 = false;
+var seeninventory2 = false;
 window.onload = function(){
   var game = new Game(300, 300);
   game.keybind(32, 'a');
@@ -245,7 +247,11 @@ window.onload = function(){
  action: function()
  {  
    player.inventory.push(game.items[4].id);
-  
+  seeninventory1 = true;
+  if (seeninventory2){
+          foregroundData[2][12] = -1;
+          map.collisionData[2][12] = 0;
+      }
  }
   }
   var greeter = {
@@ -261,7 +267,11 @@ window.onload = function(){
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
       player.inventory.push(game.items[5].id);
-
+      seeninventory2 = true;
+      if (seeninventory1){
+          foregroundData[2][12] = -1;
+          map.collisionData[2][12] = 0;
+      }
     
     }
   };
@@ -288,11 +298,9 @@ window.onload = function(){
       game.pushScene(battleScene);
     }
   };
-//<<<<<<< HEAD
-  //var spriteRoles = [,,greeter,tree,cat,,,,,,,,,brawler,,,,water]
-//=======
+
   var spriteRoles = [water,,greeter,,cat,,,,,,,,,,,brawler,,water,appletree];
-//>>>>>>> 0efb15211f3777a7b0d4acdf1f932c4836e8f550
+
   var setBattle = function(){
     battleScene.backgroundColor = '#000';
     var battle = new Group();
@@ -607,6 +615,7 @@ window.onload = function(){
         if (temp){
           spriteRoles[18].action();
           npc.say("You picked an apple");
+          
        //   player.displayStatus();
         }
         else{
