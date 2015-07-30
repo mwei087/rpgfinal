@@ -42,6 +42,9 @@ var mapData =
   var appley = 0;
   var waterx = 0;
   var watery = 0;
+  var heartx = 0;
+  var hearty = 0;
+  var seenheart = false;
    for (var i = 1; i < 25; i++){
        var newarr = [];
  /*      if (i === 1){
@@ -88,17 +91,28 @@ var mapData =
               if (random2 === 25 && !seenmoney)
            {
                index = 19;
-               moneyx = j+12;
+               moneyx = j;
                moneyy = i;
                seenmoney = true;
            }
            else if (random2 === 20 && !seenhealth)
            {
                index = 21;
-                healthx = j + 12;
+                healthx = j;
                 healthy = i
                seenhealth = true;
            }
+           }
+           if (j > 24){
+              var random3 = Math.floor((Math.random() * 144) +1);
+              if (random3 === 25 && !seenheart)
+           {
+               index = 22;
+               heartx = j;
+               hearty = i;
+               seenheart = true;
+           }
+             
            }
            if (index === -1 || index === 18){
                newarr.push(j);
@@ -123,8 +137,8 @@ var mapData =
        foregroundData[i] = temp;
    }
    if (!seenhealth){
-     healthx = Math.floor((Math.random() * 25));
-     healthy = 13 + Math.floor((Math.random() * 12));
+     healthx = Math.floor((Math.random() * 25)) + 13;
+     healthy = Math.floor((Math.random() * 12));
      foregroundData[healthy][healthx] = 21;
    }
    if(!seenmoney){
@@ -144,9 +158,17 @@ var mapData =
        var watercolumn = Math.floor((Math.random() * 12));
        foregroundData[waterrow][watercolumn] = 17;
    }
+        if (!seenheart){
+          var heartrow = Math.floor((Math.random() * 25));
+       var heartcolumn = Math.floor((Math.random() * 12)) + 24;
+       foregroundData[heartrow][heartcolumn] = 22;
+        }
    foregroundData[1][1] = -1; //[,]calls whole row not just the square
-   getPath(applex, appley, 18, 17);
-   getPath(waterx, watery, 17, 18);
+   getPath(applex, appley, 18, 17, 0, 1, 1, 0);
+   getPath(waterx, watery, 17, 18, 0, 1, 1, 0);
+   getPath(healthx, healthy, 21, 19, 12, 13, 3, 24);
+   getPath(moneyx, moneyy, 19, 21, 12, 13, 3, 24);
+   getPath(heartx, hearty, 22, 21, 24, 25, 3, 36);
    foregroundData[2][12] = 20;
   foregroundData[2][24] = 20;
 /*var foregroundData = 
@@ -177,7 +199,7 @@ var mapData =
     [3, 3, 3, -1, -1, -1, -1, -1, -1, -1, -1, 3, 3, -1, 3, -1, -1, -1, -1, 3, -1, -1, -1, -1, 3, -1, -1, 3, 3, 3, 3, 3, 3, 3, -1, -1, -1, 3],
        
    ]; */
-      function getPath(x, y, num, numignore) {
+      function getPath(x, y, num, numignore, xbound, currx, curry, twoxbound) {
        /*  var goalx = x;
         var goaly = y;
         var currentx = 1;
@@ -220,14 +242,15 @@ if (goaly === 1 && goalx ===0){
           var goaly = y; // the y value of the sprit you need to get to
           //alert(goalx);
          // alert(goaly);
-          var xval = 1; //your CURRENT x value (what square you are clearing). this WILL change
-          var yval = 1; // your CURRENT y value (what square you are clearing). this WILL change
+          var xval = currx; //your CURRENT x value (what square you are clearing). this WILL change
+          var yval = curry; // your CURRENT y value (what square you are clearing). this WILL change
           var rowcolumnfound = false;
           var coorfound = false;
           while (!rowcolumnfound){
               var dice = Math.floor((Math.random() * 4)) +1;
               var numStepsNS =  Math.floor((Math.random() * 4)) +1;
               var numStepsEW = Math.floor((Math.random() * 2)) +1;
+              numStepsEW += xbound;
                 if (goalx === 0){
                  xval--;
                   foregroundData[yval][xval] = -1;
@@ -278,8 +301,8 @@ if (goaly === 1 && goalx ===0){
                    }
               } 
               else{
-                     if (xval < 12 - numStepsEW){
-                       for (var i = 0; i < numStepsEW; i++){
+                     if (xval < twoxbound + 12 - numStepsEW){
+                       for (var i = 0; i < numStepsEW - xbound; i++){
                             xval = xval +1;
                           if( foregroundData[yval][xval] != numignore){
                           foregroundData[yval][xval] = -1;}
