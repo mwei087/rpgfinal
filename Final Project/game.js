@@ -1,13 +1,19 @@
 enchant();
 localStorage.clear();
-var enemyxval = 2;
-var enemyyval  = 2;
+alert("You are a person who is discovering just what it takes to make you current (worthless) life something beautiful. You must collect each item and make a friend. However, some things will try to kill you so avoid them. You only get 3 lives (be careful!)");
+alert("For each level collect the two necessary items. If you are lucky there may be an item in the starting place in the wall.")
+var arr = ["", "", "", "", "", ""];
+var replace = -1;
+var enemyxval = 4;
+var enemyyval  = 4;
+var hp = 3;
 var nottouched1 = false;
 var nottouched2 = false;
 var seeninventory1 = false;
 var seeninventory2 = false;
 var seeninventory3 =false;
 var seeninventory4 = false;
+var heartseen = false;
 window.onload = function(){
   var game = new Game(300, 300);
   game.keybind(32, 'a');
@@ -37,7 +43,7 @@ window.onload = function(){
     for(var i = 0; i< foregroundData.length; i++){
       collisionData.push([]);
       for(var j = 0; j< foregroundData[0].length; j++){
-        var collision = foregroundData[i][j] %18 %13 >= 1 ? 1 :0; //1 else 0
+        var collision = foregroundData[i][j] %24 %23 %18 %13 >= 1 ? 1 :0; //1 else 0
         collisionData[i][j] = collision;
       }
     }
@@ -106,14 +112,21 @@ window.onload = function(){
     player.statusLabel.backgroundColor = '#000';
   };
   player.displayStatus = function(){
+
+      if (seeninventory1){arr[0] = "X";}
+    if (seeninventory2){arr[1] = " X";}
+    if (seeninventory3){arr[2] = "X";}
+    if(seeninventory4){arr[3] = "X";}
+    if(heartseen){arr[4] = "X";}
     player.statusLabel.text = 
-	  "<br />Checklist" +
-      "<br />--Apple "+ 
-      "<br />--Water Bottle"+
-      "<br />--Money "+
-      "<br />--Safety "+
-      "<br />--Love "+
-	  "<br />--Friendship "
+	  "<br />Checklist" + 
+      "<br />--Apple "+ arr[0] +
+      "<br />--Water Bottle"+ arr[1] +
+      "<br />--Coin "+ arr[2] +
+      "<br />--Medicine "+ arr[3] +
+      "<br />--Heart "+ arr[4] +
+	  "<br />--Cat Friend "+ arr[5] +
+    "<br /> --hp=" +hp
     player.statusLabel.height = 130;
 
     player.showInventory(0);
@@ -294,7 +307,7 @@ window.onload = function(){
   };
   var money = {
     action: function(xvalue, yvalue){
-      npc.say("You got wealth");
+      npc.say("You got gold coins!");
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
       //player.inventory.push(game.items[5].id);
@@ -309,14 +322,15 @@ window.onload = function(){
   };
   var heart = {
      action: function(xvalue, yvalue){
-      npc.say("You found love!");
+      npc.say("You found a heart!");
+      heartseen = true;
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
     }
   }
   var health = {
     action: function(xvalue, yvalue){
-      npc.say("You got safety");
+      npc.say("You got a first aid kit!");
       foregroundData[yvalue][xvalue] = -1;
       map.collisionData[yvalue][xvalue] = 0;
       seeninventory4 = true;
@@ -352,7 +366,7 @@ window.onload = function(){
     }
   };
 
-  var spriteRoles = [water,,greeter,,cat,,,,,,,,,,,brawler,,water,appletree,money,,health, heart];
+  var spriteRoles = [water,,greeter,,cat,,,,,,,,,,,brawler,,water,appletree,money,,health,heart];
 
   var setBattle = function(){
     battleScene.backgroundColor = '#000';
@@ -642,8 +656,9 @@ window.onload = function(){
     game.rootScene.firstChild.x = x;
     game.rootScene.firstChild.y = y;
   };
-  
+  var timer = 500;
   setInterval(function () {
+
         var playerxval = player.xvalues();
         var playeryval = player.yvalues();
         map.collisionData[enemyyval][enemyxval] = 0
@@ -654,11 +669,11 @@ window.onload = function(){
           enemyxval--;
        }
        else{
-         foregroundData[enemyyval][enemyxval-1] = -1;
+         foregroundData[enemyyval][enemyxval-1] = replace;
           map.collisionData[enemyyval][enemyxval] = 0;
-          foregroundData[enemyyval][enemyxval] = 16;
-          if (playerxval === enemyxval && playeryval === enemyyval){
-      console.log("You died!");}
+          foregroundData[enemyyval][enemyxval] = 27;
+        //  if (playerxval === enemyxval && playeryval === enemyyval){
+     // hp--;}
        }
         }
         else if (playerxval < enemyxval){
@@ -668,11 +683,11 @@ window.onload = function(){
           enemyxval++;
        }
        else{
-         foregroundData[enemyyval][enemyxval+1] = -1;
+         foregroundData[enemyyval][enemyxval+1] = replace;
           map.collisionData[enemyyval][enemyxval] = 0;
-          foregroundData[enemyyval][enemyxval] = 16;
-           if (playerxval === enemyxval && playeryval === enemyyval){
-      console.log("You died!");}
+          foregroundData[enemyyval][enemyxval] = 27;
+       //    if (playerxval === enemyxval && playeryval === enemyyval){
+      //hp--;}
        }
         }
         
@@ -683,49 +698,61 @@ window.onload = function(){
           enemyyval--;
        }
        else{
-         foregroundData[enemyyval-1][enemyxval] = -1;
+         foregroundData[enemyyval-1][enemyxval] = replace;
           map.collisionData[enemyyval][enemyxval] = 0;
-          foregroundData[enemyyval][enemyxval] = 16;
-           if (playerxval === enemyxval && playeryval === enemyyval){
-      console.log("You died!");}
+          foregroundData[enemyyval][enemyxval] = 27;
+        //   if (playerxval === enemyxval && playeryval === enemyyval){
+      //hp--;}
        }
         }
-        else if (playerxval < enemyyval){
+        else if (playeryval < enemyyval){
           enemyyval--;
           if (map.collisionData[enemyyval][enemyxval] != 0)
         {
           enemyyval++;
        }
        else{
-         foregroundData[enemyyval+1][enemyxval] = -1;
+         foregroundData[enemyyval+1][enemyxval] = replace;
           map.collisionData[enemyyval][enemyxval] = 0;
-          foregroundData[enemyyval][enemyxval] = 16;
-           if (playerxval === enemyxval && playeryval === enemyyval){
-      console.log("You died!");}
+          foregroundData[enemyyval][enemyxval] = 27;
+        //   if (playerxval === enemyxval && playeryval === enemyyval){
+      //hp--;}
        }
         }
         if (seeninventory1 && seeninventory2 && !nottouched1){
-                    foregroundData[enemyyval][enemyxval] = -1;
+                    foregroundData[enemyyval][enemyxval] = replace;
           enemyxval = 16;
           enemyyval = 3;
+          replace = -23;
            map.collisionData[enemyyval][enemyxval] = 0;
-          foregroundData[enemyyval][enemyxval] = 16;
-           if (playerxval === enemyxval && playeryval === enemyyval){
-      console.log("You died!");}
+          foregroundData[enemyyval][enemyxval] = 27;
+        //   if (playerxval === enemyxval && playeryval === enemyyval){
+      //hp--;}
           nottouched1 = true;
         }
                 if (seeninventory3 && seeninventory4 && !nottouched2){
-                                      foregroundData[enemyyval][enemyxval] = -1;
+                                      foregroundData[enemyyval][enemyxval] = replace;
                   enemyxval = 28;
                   enemyyval = 3;
+                  replace = -24;
                  map.collisionData[enemyyval][enemyxval] = 0;
-          foregroundData[enemyyval][enemyxval] = 16;
-           if (playerxval === enemyxval && playeryval === enemyyval){
-      console.log("You died!");}
+          foregroundData[enemyyval][enemyxval] = 27;
+        //   if (playerxval === enemyxval && playeryval === enemyyval){
+      //hp--;}
                     nottouched2 = true;
                 }
+                if (playerxval === enemyxval && playeryval === enemyyval){
+
+      hp--;}
+               if (seeninventory1 && seeninventory2&& seeninventory3 && seeninventory4 && heartseen){
+         alert("You win (for now)");
        }
-       , 500);
+                if (hp <= 0){
+                  alert("you died...");
+                }
+       
+       }
+       , timer);
        
   game.onload = function(){
      
@@ -753,7 +780,7 @@ window.onload = function(){
         var temp = player.onsquare();
         if (temp){
           spriteRoles[18].action();
-          npc.say("You got food");
+          npc.say("You picked an apple!");
           
        //   player.displayStatus();
         }
