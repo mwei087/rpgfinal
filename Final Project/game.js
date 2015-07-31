@@ -252,16 +252,17 @@ window.onload = function(){
      if(player.visibleItems.length === 0){
       player.itemSurface.draw(game.assets['items.png']);
       for (var i = 0; i < player.inventory.length; i++){
-        var item = new Sprite(game.spriteWidth, game.spriteHeight);
+      /*
+	  var item = new Sprite(game.spriteWidth, game.spriteHeight);
         item.y = 130 + yOffset;
         item.x = 10 + 20*i;
         item.frame = player.inventory[i];
         item.scaleX = .5;
         item.scaleY = .5;
-        item.image = player.itemSurface;
+        item.image = player.itemSurface;
         player.visibleItems.push(item);
         game.currentScene.addChild(item);
-		
+		*/
 		
       }
     }
@@ -745,12 +746,16 @@ window.onload = function(){
 
       hp--;}
                if (seeninventory1 && seeninventory2&& seeninventory3 && seeninventory4 && heartseen){
-         alert("You win (for now)");
+         var youWin = window.confirm("You win (for now). Do you want to play again?");
+		 if (youWin == true)
+		 {
+			 location.reload();
+		 }
        }
                 if (hp <= 0){
                   var restart = window.confirm("you died...Do you want to restart?");
                   if(restart == true){
-                    location.reload()
+                    location.reload();
                   }
                   else{
                     window.open('','_self').close();
