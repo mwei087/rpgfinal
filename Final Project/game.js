@@ -1,7 +1,7 @@
 enchant();
 localStorage.clear();
 alert("You are a person who is discovering just what it takes to make you current (worthless) life something beautiful. You must collect each item and make a friend. However, some things will try to kill you so avoid them. You only get 3 lives (be careful!)");
-alert("For each level collect the two necessary items. If you are lucky there may be an item in the starting place in the wall.")
+alert("For each level collect the two necessary items (press space bar). If you are lucky there may be an item in the starting place in the wall.")
 var arr = ["", "", "", "", "", ""];
 var replace = -1;
 var enemyxval = 4;
