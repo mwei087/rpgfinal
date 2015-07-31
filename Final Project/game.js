@@ -748,7 +748,13 @@ window.onload = function(){
          alert("You win (for now)");
        }
                 if (hp <= 0){
-                  alert("you died...");
+                  var restart = window.confirm("you died...Do you want to restart?");
+                  if(restart == true){
+                    location.reload()
+                  }
+                  else{
+                    window.open('','_self').close();
+                  }
                 }
        
        }
